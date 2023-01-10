@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>feedback</title>
+<script type="text/javascript">
+	function validate()
+	{
+		
+		return validatemail() && 
+			validateage() &&
+			validatefeedback() &&
+			validatesex();
+		 	
+    }
+    function validateage(){
+		
+		var age=document.getElementById("age");
+		
+		if(age.value=="0"){
+			document.getElementById("errage").innerHTML = "Please select Age";
+				
+			return false;
+		}
+		else {
+			document.getElementById("errage").innerHTML = "";
+			
+			return true;
+		}
+	}
+	function validatefeedback(){
+		
+		var id=document.getElementById("feedback");
+		
+		if((id.options[id.selectedIndex].value)<=0)
+		{
+			document.getElementById("errid").innerHTML = "Please select feedback";
+			return false;
+		}
+		else {
+			document.getElementById("errid").innerHTML = "";
+			
+			return true;
+		}
+	}
+	
+	function validatesex(){
+		
+		var sex=document.getElementsByName("sex");
+        
+		var sexValue = false;
+		for(var i=0; i<sex.length;i++){
+			
+            if(sex[i].checked == true){
+				
+                sexValue = true;    
+            }
+        }
+        if(!sexValue){
+             document.getElementById("errsex").innerHTML = "Please select a Sex";
+			
+            return false;
+        }
+		else{
+			return true;
+
+		}
+
+	}
+	function validatemail(){
+	
+		var email=document.getElementById("email");
+
+		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    	if (!filter.test(email.value)) {
+        document.getElementById("errmail").innerHTML = "Enter Valid Email Address";
+
+    	email.focus;
+		return false;
+	
+		}
+		else
+			document.getElementById("errmail").innerHTML = "";
+
+		return true;
+	}
+	</script>
+</head>
+
+<body background="feed.jpg" onLoad="startTimer( )">
+
+<header>
+  <blockquote>
+    <blockquote>
+	  <h1 align="center" ><em><mark> Final - Fall 2017</mark></em></h1>
+    </blockquote>
+  </blockquote>
+</header>
+<main>
+ <h3 align="center" >Total Time Elapsed on Page :  <span id="ELAPSED"></span></h3>
+  <p align="center"><strong> Feedback Form </strong></p>
+  <p>&nbsp;</p>
+</main>
+
+<form action="feedback.cgi">
+<div align="center">
+Email : <input type="text" name="email" id="email" onChange="validatemail()">
+<span id="errmail" style="color:red;font-weight: bold"   ></span>
+<br>
+<br>
+Age : 
+ <label>
+<input type="range" min="0" max="50"  id="age" value="0" name="age"
+	step="1" oninput="outputUpdate(value)">
+<output for="fader" id="agedisp"></output>
+<span id="errage" style="color:red;font-weight: bold"   ></span>
+<br><br>
+Feedback : <select name="feedback" id="feedback">
+	<option value="">Feedback</option>
+		<option>Strongly Agree</option>	<option>Agree</option>	<option>Disagree</option>	<option>Strongly Disagree</option>	<option>No opinion</option>	
+</select><span id="errid" style="color:red;font-weight: bold"   ></span>
+<br><br>
+Sex : 
+    <input type="radio" name="sex" value="male" id="male">
+    Male</label>
+  
+  <label>
+    <input type="radio" name="sex" value="female" id="female">
+    Female</label><span id="errsex" style="color:red;font-weight: bold"   ></span>
+<br><br>
+<input type="submit" onClick="return validate();">
+</form>
+
+<p>
+ 
+  <br>
+</p>
+</div>
+<footer>
+<center>
+	<figure>
+  <img src="feedback.jpg" width="700" height="195">
+</figure>
+</footer>
+<script>
+var seconds = null;
+var ticker = null;
+
+function startTimer( )
+{
+    seconds = -1;
+    ticker = setInterval("tick( )", 1000);
+    tick( );
+}
+
+function tick( )
+{
+    ++seconds;
+    var secs = seconds;
+    var hrs = Math.floor( secs / 3600 );
+    secs %= 3600;
+    var mns = Math.floor( secs / 60 );
+    secs %= 60;
+    var pretty = ( hrs < 10 ? "0" : "" ) + hrs
+               + ":" + ( mns < 10 ? "0" : "" ) + mns
+               + ":" + ( secs < 10 ? "0" : "" ) + secs;
+    document.getElementById("ELAPSED").innerHTML = pretty;
+}
+</script>
+<script>function outputUpdate(vol) {
+	document.querySelector('#agedisp').value = vol;
+}</script>
+</center>
+</body>
+
+</html>
